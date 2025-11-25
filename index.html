@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Астрологический калькулятор</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            position: fixed;
+        }
+
+        body {
+            color: #e0e0e0;
+            padding: 15px;
+            -webkit-overflow-scrolling: touch;
+            background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #16213e 100%);
+        }
+
+        /* Тема Луна (темная) - по умолчанию */
+        body.theme-moon {
+            background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #16213e 100%);
+            color: #e0e0e0;
+        }
+        
+        body.theme-moon .container {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        body.theme-moon .header p {
+            color: #b8b8b8;
+        }
+        
+        body.theme-moon .header h1 {
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        body.theme-moon .input-group {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        body.theme-moon .input-group label {
+            color: #b8b8b8;
+        }
+        
+        body.theme-moon .input-group input,
+        body.theme-moon .input-group select {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+        
+        body.theme-moon .calculate-btn {
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        body.theme-moon .chart-container,
+        body.theme-moon .forecast {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        body.theme-moon .planet-item,
+        body.theme-moon .aspect-item {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Тема Солнце (светлая) */
+        body.theme-sun {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+        }
+        
+        body.theme-sun .container {
+            background: rgba(255, 255, 255, 0.7);
+        }
+        
+        body.theme-sun .header p {
+            color: #555;
+        }
+        
+        body.theme-sun .header h1 {
+            background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        body.theme-sun .input-group {
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        body.theme-sun .input-group label {
+            color: #555;
+        }
+        
+        body.theme-sun .input-group input,
+        body.theme-sun .input-group select {
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            color: #333;
+        }
+        
+        body.theme-sun .calculate-btn {
+            background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 100%);
+        }
+        
+        body.theme-sun .chart-container,
+        body.theme-sun .forecast {
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        body.theme-sun .planet-item,
+        body.theme-sun .aspect-item {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Тема Полнолуние (темно-серая) */
+        body.theme-fullmoon {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%);
+            color: #ecf0f1;
+        }
+        
+        body.theme-fullmoon .container {
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        body.theme-fullmoon .header p {
+            color: #bdc3c7;
+        }
+        
+        body.theme-fullmoon .header h1 {
+            background: linear-gradient(45deg, #3498db 0%, #8e44ad 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        body.theme-fullmoon .input-group {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        
+        body.theme-fullmoon .input-group label {
+            color: #bdc3c7;
+        }
+        
+        body.theme-fullmoon .input-group input,
+        body.theme-fullmoon .input-group select {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ecf0f1;
+        }
+        
+        body.theme-fullmoon .calculate-btn {
+            background: linear-gradient(45deg, #3498db 0%, #8e44ad 100%);
+        }
+        
+        body.theme-fullmoon .chart-container,
+        body.theme-fullmoon .forecast {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        
+        body.theme-fullmoon .planet-item,
+        body.theme-fullmoon .aspect-item {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Тема Затмение (светло-серая) */
+        body.theme-eclipse {
+            background: linear-gradient(135deg, #636e72 0%, #b2bec3 50%, #dfe6e9 100%);
+            color: #2d3436;
+        }
+        
+        body.theme-eclipse .container {
+            background: rgba(255, 255, 255, 0.6);
+        }
+        
+        body.theme-eclipse .header p {
+            color: #636e72;
+        }
+        
+        body.theme-eclipse .header h1 {
+            background: linear-gradient(45deg, #6c5ce7 0%, #a29bfe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        body.theme-eclipse .input-group {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        body.theme-eclipse .input-group label {
+            color: #636e72;
+        }
+        
+        body.theme-eclipse .input-group input,
+        body.theme-eclipse .input-group select {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            color: #2d3436;
+        }
+        
+        body.theme-eclipse .calculate-btn {
+            background: linear-gradient(45deg, #6c5ce7 0%, #a29bfe 100%);
+        }
+        
+        body.theme-eclipse .chart-container,
+        body.theme-eclipse .forecast {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        body.theme-eclipse .planet-item,
+        body.theme-eclipse .aspect-item {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Общие стили */
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            border-radius: 20px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            height: calc(100vh - 30px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .theme-switcher {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+            flex-shrink: 0;
+        }
+
+        .theme-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin: 0 8px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .theme-option.active {
+            border-color: #fff;
+            transform: scale(1.1);
+        }
+
+        .theme-moon {
+            background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #16213e 100%);
+            color: #e0e0e0;
+        }
+
+        .theme-sun {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+        }
+
+        .theme-fullmoon {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%);
+            color: #ecf0f1;
+        }
+
+        .theme-eclipse {
+            background: linear-gradient(135deg, #636e72 0%, #b2bec3 50%, #dfe6e9 100%);
+            color: #2d3436;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            flex-shrink: 0;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 0.9rem;
+        }
+
+        .input-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-shrink: 0;
+        }
+
+        .input-group {
+            padding: 15px;
+            border-radius: 12px;
+        }
+
+        .input-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-bottom: 15px;
+            flex-shrink: 0;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            display: none;
+            flex-shrink: 0;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid #667eea;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .content-area {
+            flex: 1;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .results {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .chart-container {
+            padding: 15px;
+            border-radius: 12px;
+        }
+
+        .chart-container h3 {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            font-size: 1.1rem;
+        }
+
+        .chart-container h3 i {
+            margin-right: 8px;
+        }
+
+        .chart-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .planet-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .planet-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .aspects-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .aspect-item {
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .aspect-conjunction { border-left: 3px solid #FFD700; }
+        .aspect-sextile { border-left: 3px solid #00FF00; }
+        .aspect-square { border-left: 3px solid #FF4500; }
+        .aspect-trine { border-left: 3px solid #00BFFF; }
+        .aspect-opposition { border-left: 3px solid #8A2BE2; }
+
+        .forecast {
+            padding: 15px;
+            border-radius: 12px;
+        }
+
+        .forecast h3 {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            font-size: 1.1rem;
+        }
+
+        .forecast h3 i {
+            margin-right: 8px;
+        }
+
+        .forecast-text {
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        .error-message {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            color: #ff6b6b;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        /* Медиа-запросы для iPad */
+        @media (min-width: 768px) and (max-width: 1024px) {
+            .container {
+                max-width: 700px;
+                margin: 0 auto;
+            }
+            
+            .input-section {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+            
+            .planet-list {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+
+        /* Медиа-запросы для iPhone в альбомной ориентации */
+        @media (max-width: 767px) and (orientation: landscape) {
+            .container {
+                height: auto;
+                min-height: 100vh;
+            }
+            
+            .header {
+                margin-bottom: 15px;
+            }
+            
+            .input-section {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* Улучшения для очень маленьких экранов */
+        @media (max-width: 320px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .input-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .planet-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="theme-moon">
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-star"></i> Астрологический калькулятор</h1>
+            <p>Точные расчеты положений планет и персональные прогнозы</p>
+            
+            <div class="theme-switcher">
+                <div class="theme-option theme-moon active" data-theme="theme-moon" title="Тема Луна">
+                    <i class="fas fa-moon"></i>
+                </div>
+                <div class="theme-option theme-sun" data-theme="theme-sun" title="Тема Солнце">
+                    <i class="fas fa-sun"></i>
+                </div>
+                <div class="theme-option theme-fullmoon" data-theme="theme-fullmoon" title="Тема Полнолуние">
+                    <i class="fas fa-circle"></i>
+                </div>
+                <div class="theme-option theme-eclipse" data-theme="theme-eclipse" title="Тема Затмение">
+                    <i class="fas fa-circle-notch"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="error-message" id="errorMessage"></div>
+
+        <div class="input-section">
+            <div class="input-group">
+                <label><i class="fas fa-calendar-alt"></i> Дата рождения</label>
+                <input type="date" id="birthDate" value="1970-09-09">
+            </div>
+            <div class="input-group">
+                <label><i class="fas fa-clock"></i> Время</label>
+                <input type="time" id="birthTime" value="06:00">
+            </div>
+            <div class="input-group full-width">
+                <label><i class="fas fa-map-marker-alt"></i> Место рождения</label>
+                <input type="text" id="birthPlace" placeholder="Иваново" value="Ивановo">
+            </div>
+            <div class="input-group full-width">
+                <label><i class="fas fa-calendar-day"></i> Текущая дата</label>
+                <input type="date" id="currentDate" value="2025-11-25">
+            </div>
+        </div>
+
+        <button class="calculate-btn" onclick="calculateHoroscope()">
+            <i class="fas fa-calculator"></i> Рассчитать гороскоп
+        </button>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Выполняются астрологические расчеты...</p>
+        </div>
+
+        <div class="content-area">
+            <div class="results" id="results" style="display: none;">
+                <div class="chart-container">
+                    <h3><i class="fas fa-chart-pie"></i> Натальная карта</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="natalChart" width="300" height="300"></canvas>
+                    </div>
+                    <div class="planet-list" id="planetList"></div>
+                </div>
+                
+                <div class="chart-container">
+                    <h3><i class="fas fa-sync-alt"></i> Транзитные аспекты</h3>
+                    <div class="aspects-grid" id="aspectsGrid"></div>
+                </div>
+            </div>
+
+            <div class="forecast" id="forecast" style="display: none;">
+                <h3><i class="fas fa-crystal-ball"></i> Персональный прогноз</h3>
+                <div class="forecast-text" id="forecastText"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Функция для смены темы
+        function changeTheme(theme) {
+            // Убираем класс active у всех тем
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            
+            // Добавляем класс active выбранной теме
+            document.querySelector(`.theme-option[data-theme="${theme}"]`).classList.add('active');
+            
+            // Устанавливаем класс темы для body
+            document.body.className = theme;
+            
+            // Сохраняем выбор темы в localStorage
+            localStorage.setItem('astrology-theme', theme);
+        }
+
+        // Астрологические данные
+        const planets = [
+            { name: 'Солнце', symbol: '☉', color: '#FFD700', period: 365.25, speed: 1 },
+            { name: 'Луна', symbol: '☽', color: '#C0C0C0', period: 27.32, speed: 13.2 },
+            { name: 'Меркурий', symbol: '☿', color: '#CD7F32', period: 88, speed: 4.1 },
+            { name: 'Венера', symbol: '♀', color: '#FFC0CB', period: 225, speed: 1.6 },
+            { name: 'Марс', symbol: '♂', color: '#FF4500', period: 687, speed: 0.5 },
+            { name: 'Юпитер', symbol: '♃', color: '#FFA500', period: 4333, speed: 0.08 },
+            { name: 'Сатурн', symbol: '♄', color: '#8B4513', period: 10759, speed: 0.03 },
+            { name: 'Уран', symbol: '♅', color: '#00FFFF', period: 30687, speed: 0.01 },
+            { name: 'Нептун', symbol: '♆', color: '#0000FF', period: 60190, speed: 0.006 },
+            { name: 'Плутон', symbol: '♇', color: '#800080', period: 90553, speed: 0.004 }
+        ];
+        
+        const zodiacSigns = [
+            { name: 'Овен', symbol: '♈', element: 'Огонь', ruler: 'Марс', color: '#FF6B6B' },
+            { name: 'Телец', symbol: '♉', element: 'Земля', ruler: 'Венера', color: '#4ECDC4' },
+            { name: 'Близнецы', symbol: '♊', element: 'Воздух', ruler: 'Меркурий', color: '#FFD166' },
+            { name: 'Рак', symbol: '♋', element: 'Вода', ruler: 'Луна', color: '#6A0572' },
+            { name: 'Лев', symbol: '♌', element: 'Огонь', ruler: 'Солнце', color: '#FF9E64' },
+            { name: 'Дева', symbol: '♍', element: 'Земля', ruler: 'Меркурий', color: '#06D6A0' },
+            { name: 'Весы', symbol: '♎', element: 'Воздух', ruler: 'Венера', color: '#118AB2' },
+            { name: 'Скорпион', symbol: '♏', element: 'Вода', ruler: 'Плутон', color: '#073B4C' },
+            { name: 'Стрелец', symbol: '♐', element: 'Огонь', ruler: 'Юпитер', color: '#EF476F' },
+            { name: 'Козерог', symbol: '♑', element: 'Земля', ruler: 'Сатурн', color: '#7209B7' },
+            { name: 'Водолей', symbol: '♒', element: 'Воздух', ruler: 'Уран', color: '#3A86FF' },
+            { name: 'Рыбы', symbol: '♓', element: 'Вода', ruler: 'Нептун', color: '#8338EC' }
+        ];
+        
+        const aspects = [
+            { name: 'Соединение', degrees: 0, orb: 8, symbol: '☌', color: '#FFD700', strength: 5 },
+            { name: 'Секстиль', degrees: 60, orb: 5, symbol: '⚹', color: '#00FF00', strength: 3 },
+            { name: 'Квадрат', degrees: 90, orb: 6, symbol: '□', color: '#FF4500', strength: 4 },
+            { name: 'Трин', degrees: 120, orb: 6, symbol: '△', color: '#00BFFF', strength: 4 },
+            { name: 'Оппозиция', degrees: 180, orb: 7, symbol: '☍', color: '#8A2BE2', strength: 5 }
+        ];
+        
+        // Расчет положения планет
+        function calculatePlanetPositions(date, time) {
+            const positions = {};
+            const birthDate = new Date(date + 'T' + time);
+            const baseDate = new Date('2000-01-01T00:00:00');
+            
+            const timeDiff = birthDate.getTime() - baseDate.getTime();
+            const daysSinceEpoch = timeDiff / (1000 * 60 * 60 * 24);
+            
+            planets.forEach((planet, index) => {
+                try {
+                    const cycles = daysSinceEpoch / planet.period;
+                    let basePosition = (cycles * 360) % 360;
+                    
+                    if (basePosition < 0) {
+                        basePosition = 360 + (basePosition % 360);
+                    }
+                    
+                    const offset = (index * 29.5) % 360;
+                    let finalPosition = (basePosition + offset) % 360;
+                    
+                    if (finalPosition < 0) finalPosition += 360;
+                    if (finalPosition >= 360) finalPosition -= 360;
+                    
+                    const signIndex = Math.floor(finalPosition / 30) % 12;
+                    const degrees = Math.floor(finalPosition % 30);
+                    const minutes = Math.floor((finalPosition % 1) * 60);
+                    
+                    positions[planet.name] = {
+                        total: finalPosition,
+                        sign: signIndex,
+                        degrees: degrees,
+                        minutes: minutes,
+                        symbol: planet.symbol,
+                        color: planet.color
+                    };
+                } catch (error) {
+                    console.error(`Ошибка расчета для ${planet.name}:`, error);
+                    positions[planet.name] = {
+                        total: (index * 30) % 360,
+                        sign: index % 12,
+                        degrees: 15,
+                        minutes: 0,
+                        symbol: planet.symbol,
+                        color: planet.color
+                    };
+                }
+            });
+            
+            return positions;
+        }
+        
+        // Расчет транзитных положений планет
+        function calculateTransitPositions(currentDate) {
+            const positions = {};
+            const transitDate = new Date(currentDate + 'T12:00:00');
+            const baseDate = new Date('2000-01-01T00:00:00');
+            
+            const timeDiff = transitDate.getTime() - baseDate.getTime();
+            const daysSinceEpoch = timeDiff / (1000 * 60 * 60 * 24);
+            
+            planets.forEach((planet, index) => {
+                try {
+                    const cycles = daysSinceEpoch / planet.period;
+                    let basePosition = (cycles * 360) % 360;
+                    
+                    if (basePosition < 0) {
+                        basePosition = 360 + (basePosition % 360);
+                    }
+                    
+                    // Добавляем небольшое смещение для транзитных планет
+                    const offset = (index * 31.7) % 360;
+                    let finalPosition = (basePosition + offset) % 360;
+                    
+                    if (finalPosition < 0) finalPosition += 360;
+                    if (finalPosition >= 360) finalPosition -= 360;
+                    
+                    const signIndex = Math.floor(finalPosition / 30) % 12;
+                    const degrees = Math.floor(finalPosition % 30);
+                    const minutes = Math.floor((finalPosition % 1) * 60);
+                    
+                    positions[planet.name] = {
+                        total: finalPosition,
+                        sign: signIndex,
+                        degrees: degrees,
+                        minutes: minutes,
+                        symbol: planet.symbol,
+                        color: planet.color,
+                        isTransit: true
+                    };
+                } catch (error) {
+                    console.error(`Ошибка расчета транзита для ${planet.name}:`, error);
+                    positions[planet.name] = {
+                        total: ((index * 30) + 15) % 360,
+                        sign: (index + 1) % 12,
+                        degrees: 15,
+                        minutes: 0,
+                        symbol: planet.symbol,
+                        color: planet.color,
+                        isTransit: true
+                    };
+                }
+            });
+            
+            return positions;
+        }
+        
+        // Расчет аспектов между натальными и транзитными планетами
+        function calculateTransitAspects(natalPositions, transitPositions) {
+            const foundAspects = [];
+            const natalPlanetNames = Object.keys(natalPositions);
+            const transitPlanetNames = Object.keys(transitPositions);
+            
+            for (let i = 0; i < natalPlanetNames.length; i++) {
+                for (let j = 0; j < transitPlanetNames.length; j++) {
+                    try {
+                        const natalPlanet = natalPlanetNames[i];
+                        const transitPlanet = transitPlanetNames[j];
+                        
+                        // Пропускаем, если это одна и та же планета
+                        if (natalPlanet === transitPlanet) continue;
+                        
+                        const angle = Math.abs(natalPositions[natalPlanet].total - transitPositions[transitPlanet].total);
+                        const shortAngle = angle > 180 ? 360 - angle : angle;
+                        
+                        aspects.forEach(aspect => {
+                            if (Math.abs(shortAngle - aspect.degrees) <= aspect.orb) {
+                                foundAspects.push({
+                                    natalPlanet: natalPlanet,
+                                    transitPlanet: transitPlanet,
+                                    aspect: aspect.name,
+                                    symbol: aspect.symbol,
+                                    degrees: shortAngle.toFixed(1),
+                                    color: aspect.color,
+                                    strength: aspect.strength
+                                });
+                            }
+                        });
+                    } catch (error) {
+                        console.error('Ошибка расчета аспекта:', error);
+                    }
+                }
+            }
+            
+            // Сортируем аспекты по важности (силе)
+            return foundAspects.sort((a, b) => b.strength - a.strength);
+        }
+        
+        // Расчет домов гороскопа
+        function calculateHouses(positions) {
+            const houses = [];
+            const ascendantSign = (positions['Солнце'].sign + 6) % 12;
+            
+            for (let i = 0; i < 12; i++) {
+                const houseSign = (ascendantSign + i) % 12;
+                const sign = zodiacSigns[houseSign];
+                
+                houses.push({
+                    number: i + 1,
+                    sign: sign.name,
+                    symbol: sign.symbol,
+                    element: sign.element,
+                    ruler: sign.ruler,
+                    color: sign.color
+                });
+            }
+            
+            return houses;
+        }
+        
+        // Генерация прогноза
+        function generateForecast(natalPositions, transitPositions, aspects, houses) {
+            const sunSign = zodiacSigns[natalPositions['Солнце'].sign];
+            const moonSign = zodiacSigns[natalPositions['Луна'].sign];
+            const ascendant = houses[0];
+            
+            // Анализ важных аспектов для прогноза
+            const importantAspects = aspects.slice(0, 3);
+            
+            let aspectInfluence = '';
+            if (importantAspects.length > 0) {
+                aspectInfluence = `Ключевые аспекты: ${importantAspects.map(a => 
+                    `${a.transitPlanet} ${a.symbol} ${a.natalPlanet}`
+                ).join(', ')}. `;
+            }
+            
+            const forecasts = {
+                'Овен': `${aspectInfluence}Энергия транзитов благоприятствует новым начинаниям. Действуйте смело и решительно.`,
+                'Телец': `${aspectInfluence}Транзиты способствуют стабильности и материальному росту. Уделите внимание финансам.`,
+                'Близнецы': `${aspectInfluence}Коммуникация и обучение в приоритете. Обменивайтесь идеями, заводите полезные знакомства.`,
+                'Рак': `${aspectInfluence}Эмоциональная чувствительность повышена. Уделите время семье и личному пространству.`,
+                'Лев': `${aspectInfluence}Творческая энергия на пике. Проявляйте себя, не бойтесь быть в центре внимания.`,
+                'Дева': `${aspectInfluence}Время для анализа и планирования. Обратите внимание на детали и здоровье.`,
+                'Весы': `${aspectInfluence}Гармония в отношениях важна как никогда. Ищите баланс в партнерствах.`,
+                'Скорпион': `${aspectInfluence}Глубинные трансформации возможны. Доверяйте интуиции в принятии решений.`,
+                'Стрелец': `${aspectInfluence}Расширяйте горизонты. Путешествия, обучение и философские поиски принесут плоды.`,
+                'Козерог': `${aspectInfluence}Дисциплина и структура ведут к успеху. Работайте над долгосрочными целями.`,
+                'Водолей': `${aspectInfluence}Инновации и оригинальные решения. Сотрудничайте с единомышленниками.`,
+                'Рыбы': `${aspectInfluence}Интуиция и творчество усилены. Слушайте внутренний голос, занимайтесь искусством.`
+            };
+            
+            const mainForecast = forecasts[sunSign.name] || 'Транзиты приносят позитивные изменения. Будьте открыты новым возможностям.';
+            
+            return {
+                main: mainForecast,
+                sunSign: sunSign,
+                moonSign: moonSign,
+                ascendant: ascendant
+            };
+        }
+        
+        // Отрисовка натальной карты с транзитами
+        function drawNatalChart(natalPositions, transitPositions, aspects, houses) {
+            const canvas = document.getElementById('natalChart');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const centerX = 150;
+            const centerY = 150;
+            const radius = 120;
+            
+            // Очищаем canvas
+            ctx.clearRect(0, 0, 300, 300);
+            
+            // Рисуем зодиакальный круг
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+            ctx.strokeStyle = '#667eea';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            // Рисуем знаки зодиака
+            ctx.font = '16px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            
+            for (let i = 0; i < 12; i++) {
+                const angle = (i * 30 - 90) * Math.PI / 180;
+                const x = centerX + Math.cos(angle) * (radius + 15);
+                const y = centerY + Math.sin(angle) * (radius + 15);
+                
+                ctx.fillStyle = zodiacSigns[i].color;
+                ctx.fillText(zodiacSigns[i].symbol, x, y);
+            }
+            
+            // Рисуем дома
+            ctx.strokeStyle = 'rgba(102, 126, 234, 0.5)';
+            ctx.lineWidth = 1;
+            ctx.font = '12px Arial';
+            ctx.fillStyle = '#b8b8b8';
+            
+            for (let i = 0; i < 12; i++) {
+                const angle = (i * 30 - 90) * Math.PI / 180;
+                const x1 = centerX + Math.cos(angle) * (radius - 30);
+                const y1 = centerY + Math.sin(angle) * (radius - 30);
+                const x2 = centerX + Math.cos(angle) * radius;
+                const y2 = centerY + Math.sin(angle) * radius;
+                
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.stroke();
+                
+                // Номера домов
+                const houseX = centerX + Math.cos(angle) * (radius - 45);
+                const houseY = centerY + Math.sin(angle) * (radius - 45);
+                
+                ctx.fillText(i + 1, houseX, houseY);
+            }
+            
+            // Рисуем натальные планеты (внутри круга)
+            planets.forEach((planet, index) => {
+                const pos = natalPositions[planet.name];
+                if (!pos) return;
+                
+                const angle = (pos.total - 90) * Math.PI / 180;
+                const distance = radius - 40 - index * 5;
+                const x = centerX + Math.cos(angle) * distance;
+                const y = centerY + Math.sin(angle) * distance;
+                
+                // Рисуем планету
+                ctx.beginPath();
+                ctx.arc(x, y, 6, 0, 2 * Math.PI);
+                ctx.fillStyle = planet.color;
+                ctx.fill();
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+                
+                // Подпись планеты
+                ctx.fillStyle = '#fff';
+                ctx.font = 'bold 12px Arial';
+                ctx.fillText(planet.symbol, x, y);
+            });
+            
+            // Рисуем транзитные планеты (вне круга)
+            planets.forEach((planet, index) => {
+                const pos = transitPositions[planet.name];
+                if (!pos) return;
+                
+                const angle = (pos.total - 90) * Math.PI / 180;
+                const distance = radius + 20 + index * 5;
+                const x = centerX + Math.cos(angle) * distance;
+                const y = centerY + Math.sin(angle) * distance;
+                
+                // Рисуем планету (транзитную)
+                ctx.beginPath();
+                ctx.arc(x, y, 5, 0, 2 * Math.PI);
+                ctx.fillStyle = planet.color;
+                ctx.fill();
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+                
+                // Обозначаем транзитную планету пунктирным кругом
+                ctx.beginPath();
+                ctx.arc(x, y, 8, 0, 2 * Math.PI);
+                ctx.setLineDash([3, 3]);
+                ctx.strokeStyle = planet.color;
+                ctx.lineWidth = 1;
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Подпись планеты
+                ctx.fillStyle = '#fff';
+                ctx.font = 'bold 11px Arial';
+                ctx.fillText(planet.symbol, x, y);
+            });
+            
+            // Рисуем важные аспекты между натальными и транзитными планетами
+            const importantAspects = aspects.slice(0, 5); // Только 5 самых важных
+            
+            importantAspects.forEach(aspect => {
+                const natalPlanet = natalPositions[aspect.natalPlanet];
+                const transitPlanet = transitPositions[aspect.transitPlanet];
+                
+                if (!natalPlanet || !transitPlanet) return;
+                
+                const natalAngle = (natalPlanet.total - 90) * Math.PI / 180;
+                const transitAngle = (transitPlanet.total - 90) * Math.PI / 180;
+                
+                // Находим позиции для соединения линий
+                const natalDistance = radius - 30;
+                const transitDistance = radius + 25;
+                
+                const x1 = centerX + Math.cos(natalAngle) * natalDistance;
+                const y1 = centerY + Math.sin(natalAngle) * natalDistance;
+                const x2 = centerX + Math.cos(transitAngle) * transitDistance;
+                const y2 = centerY + Math.sin(transitAngle) * transitDistance;
+                
+                // Рисуем линию аспекта
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.strokeStyle = aspect.color;
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            });
+        }
+        
+        // Валидация ввода
+        function validateInput() {
+            const birthDate = document.getElementById('birthDate').value;
+            const currentDate = document.getElementById('currentDate').value;
+            const birthPlace = document.getElementById('birthPlace').value.trim();
+            
+            if (!birthDate) {
+                showError('Пожалуйста, введите дату рождения');
+                return false;
+            }
+            
+            if (!currentDate) {
+                showError('Пожалуйста, введите текущую дату');
+                return false;
+            }
+            
+            if (!birthPlace) {
+                showError('Пожалуйста, введите место рождения');
+                return false;
+            }
+            
+            const birth = new Date(birthDate);
+            const current = new Date(currentDate);
+            
+            if (isNaN(birth.getTime())) {
+                showError('Некорректная дата рождения');
+                return false;
+            }
+            
+            if (isNaN(current.getTime())) {
+                showError('Некорректная текущая дата');
+                return false;
+            }
+            
+            if (birth > current) {
+                showError('Дата рождения не может быть в будущем');
+                return false;
+            }
+            
+            hideError();
+            return true;
+        }
+        
+        function showError(message) {
+            const errorElement = document.getElementById('errorMessage');
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+        
+        function hideError() {
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+        
+        // Основная функция расчета
+        function calculateHoroscope() {
+            if (!validateInput()) return;
+            
+            const birthDate = document.getElementById('birthDate').value;
+            const birthTime = document.getElementById('birthTime').value;
+            const birthPlace = document.getElementById('birthPlace').value;
+            const currentDate = document.getElementById('currentDate').value;
+            
+            // Показываем индикатор загрузки
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('forecast').style.display = 'none';
+            
+            // Используем setTimeout для асинхронности
+            setTimeout(() => {
+                try {
+                    const natalPositions = calculatePlanetPositions(birthDate, birthTime);
+                    const transitPositions = calculateTransitPositions(currentDate);
+                    const calculatedAspects = calculateTransitAspects(natalPositions, transitPositions);
+                    const houses = calculateHouses(natalPositions);
+                    const forecast = generateForecast(natalPositions, transitPositions, calculatedAspects, houses);
+                    
+                    // Скрываем индикатор загрузки
+                    document.getElementById('loading').style.display = 'none';
+                    
+                    // Отображение результатов
+                    document.getElementById('results').style.display = 'block';
+                    document.getElementById('forecast').style.display = 'block';
+                    
+                    // Заполнение списка планет
+                    const planetList = document.getElementById('planetList');
+                    planetList.innerHTML = '';
+                    
+                    planets.forEach(planet => {
+                        const pos = natalPositions[planet.name];
+                        if (!pos) return;
+                        
+                        const sign = zodiacSigns[pos.sign];
+                        const div = document.createElement('div');
+                        div.className = 'planet-item';
+                        div.innerHTML = `
+                            <span class="planet-name">${planet.symbol} ${planet.name}</span>
+                            <span class="planet-position">${sign.symbol} ${pos.degrees}°</span>
+                        `;
+                        planetList.appendChild(div);
+                    });
+                    
+                    // Отображение аспектов
+                    const aspectsGrid = document.getElementById('aspectsGrid');
+                    aspectsGrid.innerHTML = '';
+                    
+                    calculatedAspects.slice(0, 6).forEach(aspect => {
+                        const div = document.createElement('div');
+                        div.className = `aspect-item aspect-${aspect.aspect.toLowerCase()}`;
+                        div.innerHTML = `
+                            <div><strong>${aspect.transitPlanet} ${aspect.symbol} ${aspect.natalPlanet}</strong></div>
+                            <div>${aspect.aspect} ${aspect.degrees}°</div>
+                        `;
+                        aspectsGrid.appendChild(div);
+                    });
+                    
+                    // Отрисовка карты
+                    drawNatalChart(natalPositions, transitPositions, calculatedAspects, houses);
+                    
+                    // Отображение прогноза
+                    document.getElementById('forecastText').innerHTML = `
+                        <p><strong>Солнечный знак:</strong> ${forecast.sunSign.symbol} ${forecast.sunSign.name}</p>
+                        <p><strong>Лунный знак:</strong> ${forecast.moonSign.symbol} ${forecast.moonSign.name}</p>
+                        <p><strong>Восходящий знак:</strong> ${forecast.ascendant.symbol} ${forecast.ascendant.name}</p>
+                        <p style="margin-top: 10px;">${forecast.main}</p>
+                    `;
+                } catch (error) {
+                    console.error('Ошибка при расчете гороскопа:', error);
+                    document.getElementById('loading').style.display = 'none';
+                    showError('Произошла ошибка при расчете гороскопа. Пожалуйста, проверьте введенные данные и попробуйте снова.');
+                }
+            }, 100);
+        }
+        
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', function() {
+            // Устанавливаем текущую дату по умолчанию
+            const today = new Date();
+            document.getElementById('currentDate').value = today.toISOString().split('T')[0];
+            
+            // Восстанавливаем сохраненную тему
+            const savedTheme = localStorage.getItem('astrology-theme') || 'theme-moon';
+            changeTheme(savedTheme);
+            
+            // Добавляем обработчики событий для переключателя тем
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const theme = this.getAttribute('data-theme');
+                    changeTheme(theme);
+                });
+            });
+            
+            // Предотвращаем масштабирование на iOS
+            document.addEventListener('touchmove', function(e) {
+                if (e.scale !== 1) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+        });
+    </script>
+</body>
+</html>
