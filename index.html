@@ -3,10 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="apple-touch-icon" sizes="180x180" href="icons/icon224.png">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="ASTR 1.1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
     <title>Астрологический калькулятор</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -35,12 +31,38 @@
 
         /* Тема Луна (темная) - по умолчанию */
         body.theme-moon {
-            background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #16213e 100%);
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.05) 0%, transparent 50%),
+                linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #16213e 100%);
             color: #e0e0e0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        body.theme-moon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 2.5px),
+                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 1.5px),
+                radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 2.5px);
+            background-size: 550px 550px, 350px 350px, 250px 250px;
+            background-position: 0 0, 40px 60px, 130px 270px;
+            z-index: -1;
+            opacity: 0.3;
         }
         
         body.theme-moon .container {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(15, 15, 30, 0.7);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
         
         body.theme-moon .header p {
@@ -48,40 +70,69 @@
         }
         
         body.theme-moon .header h1 {
-            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(45deg, #a78bfa 0%, #7dd3fc 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(167, 139, 250, 0.3);
         }
         
         body.theme-moon .input-group {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(30, 30, 60, 0.5);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
         
         body.theme-moon .input-group label {
-            color: #b8b8b8;
+            color: #c4b5fd;
         }
         
         body.theme-moon .input-group input,
         body.theme-moon .input-group select {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #fff;
+            background: rgba(50, 50, 80, 0.5);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            color: #e0e0e0;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
         body.theme-moon .calculate-btn {
-            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(45deg, #7c3aed 0%, #5b21b6 100%);
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        body.theme-moon .calculate-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        body.theme-moon .calculate-btn:hover::before {
+            left: 100%;
         }
         
         body.theme-moon .chart-container,
         body.theme-moon .forecast {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(30, 30, 60, 0.5);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
         
         body.theme-moon .planet-item,
         body.theme-moon .aspect-item {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(40, 40, 70, 0.5);
+            border: 1px solid rgba(102, 126, 234, 0.1);
+        }
+        
+        body.theme-moon .chart-container h3,
+        body.theme-moon .forecast h3 {
+            color: #a78bfa;
+            text-shadow: 0 2px 4px rgba(167, 139, 250, 0.2);
         }
 
         /* Тема Солнце (светлая) */
@@ -352,6 +403,12 @@
             cursor: pointer;
             margin-bottom: 15px;
             flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.5);
         }
 
         .loading {
@@ -475,6 +532,56 @@
             display: none;
         }
 
+        /* Нумерологические элементы для темы Луна */
+        .numerology-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        .numerology-circle {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(167, 139, 250, 0.3);
+        }
+
+        .circle-1 {
+            width: 100px;
+            height: 100px;
+            top: 10%;
+            left: 10%;
+        }
+
+        .circle-2 {
+            width: 150px;
+            height: 150px;
+            bottom: 15%;
+            right: 10%;
+        }
+
+        .numerology-line {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(167, 139, 250, 0.3), transparent);
+        }
+
+        .line-1 {
+            width: 80%;
+            top: 30%;
+            left: 10%;
+        }
+
+        .line-2 {
+            width: 60%;
+            bottom: 40%;
+            right: 10%;
+        }
+
         /* Медиа-запросы для iPad */
         @media (min-width: 768px) and (max-width: 1024px) {
             .container {
@@ -524,6 +631,13 @@
     </style>
 </head>
 <body class="theme-moon">
+    <div class="numerology-elements">
+        <div class="numerology-circle circle-1"></div>
+        <div class="numerology-circle circle-2"></div>
+        <div class="numerology-line line-1"></div>
+        <div class="numerology-line line-2"></div>
+    </div>
+    
     <div class="container">
         <div class="header">
             <h1><i class="fas fa-star"></i> Астрологический калькулятор</h1>
