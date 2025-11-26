@@ -12,19 +12,17 @@
             box-sizing: border-box;
             font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
             -webkit-tap-highlight-color: transparent;
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
 
         html, body {
             width: 100%;
             height: 100%;
-            overflow-x: hidden;
-            position: fixed;
+            overflow: hidden;
         }
 
         body {
             color: #e0e0e0;
-            padding: 15px;
+            padding: 10px;
             -webkit-overflow-scrolling: touch;
             background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #16213e 100%);
         }
@@ -34,52 +32,25 @@
             background: 
                 radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.05) 0%, transparent 50%),
                 linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #16213e 100%);
             color: #e0e0e0;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        body.theme-moon::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: 
-                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 2.5px),
-                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 1.5px),
-                radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 2.5px);
-            background-size: 550px 550px, 350px 350px, 250px 250px;
-            background-position: 0 0, 40px 60px, 130px 270px;
-            z-index: -1;
-            opacity: 0.3;
         }
         
         body.theme-moon .container {
-            background: rgba(15, 15, 30, 0.7);
+            background: rgba(15, 15, 30, 0.8);
             border: 1px solid rgba(102, 126, 234, 0.3);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 
-                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        }
-        
-        body.theme-moon .header p {
-            color: #b8b8b8;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
         }
         
         body.theme-moon .header h1 {
             background: linear-gradient(45deg, #a78bfa 0%, #7dd3fc 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 2px 10px rgba(167, 139, 250, 0.3);
         }
         
         body.theme-moon .input-group {
             background: rgba(30, 30, 60, 0.5);
             border: 1px solid rgba(102, 126, 234, 0.2);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
         
         body.theme-moon .input-group label {
@@ -91,36 +62,17 @@
             background: rgba(50, 50, 80, 0.5);
             border: 1px solid rgba(102, 126, 234, 0.3);
             color: #e0e0e0;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
         body.theme-moon .calculate-btn {
             background: linear-gradient(45deg, #7c3aed 0%, #5b21b6 100%);
             box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        body.theme-moon .calculate-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: 0.5s;
-        }
-        
-        body.theme-moon .calculate-btn:hover::before {
-            left: 100%;
         }
         
         body.theme-moon .chart-container,
         body.theme-moon .forecast {
             background: rgba(30, 30, 60, 0.5);
             border: 1px solid rgba(102, 126, 234, 0.2);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
         
         body.theme-moon .planet-item,
@@ -132,7 +84,6 @@
         body.theme-moon .chart-container h3,
         body.theme-moon .forecast h3 {
             color: #a78bfa;
-            text-shadow: 0 2px 4px rgba(167, 139, 250, 0.2);
         }
 
         /* Тема Солнце (светлая) */
@@ -142,26 +93,12 @@
         }
         
         body.theme-sun .container {
-            background: rgba(255, 255, 255, 0.7);
-        }
-        
-        body.theme-sun .header p {
-            color: #555;
-        }
-        
-        body.theme-sun .header h1 {
-            background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background: rgba(255, 255, 255, 0.8);
         }
         
         body.theme-sun .input-group {
             background: rgba(255, 255, 255, 0.6);
             border: 1px solid rgba(0, 0, 0, 0.1);
-        }
-        
-        body.theme-sun .input-group label {
-            color: #555;
         }
         
         body.theme-sun .input-group input,
@@ -193,26 +130,12 @@
         }
         
         body.theme-fullmoon .container {
-            background: rgba(255, 255, 255, 0.08);
-        }
-        
-        body.theme-fullmoon .header p {
-            color: #bdc3c7;
-        }
-        
-        body.theme-fullmoon .header h1 {
-            background: linear-gradient(45deg, #3498db 0%, #8e44ad 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background: rgba(255, 255, 255, 0.1);
         }
         
         body.theme-fullmoon .input-group {
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.15);
-        }
-        
-        body.theme-fullmoon .input-group label {
-            color: #bdc3c7;
         }
         
         body.theme-fullmoon .input-group input,
@@ -244,26 +167,12 @@
         }
         
         body.theme-eclipse .container {
-            background: rgba(255, 255, 255, 0.6);
-        }
-        
-        body.theme-eclipse .header p {
-            color: #636e72;
-        }
-        
-        body.theme-eclipse .header h1 {
-            background: linear-gradient(45deg, #6c5ce7 0%, #a29bfe 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background: rgba(255, 255, 255, 0.7);
         }
         
         body.theme-eclipse .input-group {
             background: rgba(255, 255, 255, 0.5);
             border: 1px solid rgba(0, 0, 0, 0.1);
-        }
-        
-        body.theme-eclipse .input-group label {
-            color: #636e72;
         }
         
         body.theme-eclipse .input-group input,
@@ -291,35 +200,32 @@
         /* Общие стили */
         .container {
             max-width: 100%;
+            height: 100%;
             margin: 0 auto;
-            border-radius: 20px;
-            padding: 20px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            height: calc(100vh - 30px);
+            border-radius: 16px;
+            padding: 12px;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
         }
 
         .theme-switcher {
             display: flex;
             justify-content: center;
-            margin-bottom: 15px;
-            flex-shrink: 0;
+            margin-bottom: 10px;
         }
 
         .theme-option {
-            width: 40px;
-            height: 40px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
-            margin: 0 8px;
+            margin: 0 6px;
             cursor: pointer;
             border: 2px solid transparent;
-            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 14px;
         }
 
         .theme-option.active {
@@ -349,30 +255,29 @@
 
         .header {
             text-align: center;
-            margin-bottom: 20px;
-            flex-shrink: 0;
+            margin-bottom: 12px;
         }
 
         .header h1 {
-            font-size: 1.8rem;
-            margin-bottom: 8px;
+            font-size: 1.4rem;
+            margin-bottom: 4px;
         }
 
         .header p {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
+            opacity: 0.8;
         }
 
         .input-section {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 20px;
-            flex-shrink: 0;
+            gap: 8px;
+            margin-bottom: 12px;
         }
 
         .input-group {
-            padding: 15px;
-            border-radius: 12px;
+            padding: 10px;
+            border-radius: 10px;
         }
 
         .input-group.full-width {
@@ -381,28 +286,42 @@
 
         .input-group label {
             display: block;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             font-weight: 500;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
         .input-group input, .input-group select {
             width: 100%;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 16px;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 14px;
+            border: none;
+        }
+
+        .city-select-wrapper {
+            position: relative;
+        }
+
+        .city-select-wrapper i {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: #a78bfa;
+            font-size: 12px;
         }
 
         .calculate-btn {
             width: 100%;
-            padding: 16px;
+            padding: 12px;
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
             color: white;
-            font-size: 1.1rem;
+            font-size: 1rem;
             cursor: pointer;
-            margin-bottom: 15px;
-            flex-shrink: 0;
+            margin-bottom: 10px;
             transition: all 0.3s ease;
         }
 
@@ -413,19 +332,18 @@
 
         .loading {
             text-align: center;
-            padding: 20px;
+            padding: 15px;
             display: none;
-            flex-shrink: 0;
         }
 
         .spinner {
-            border: 4px solid rgba(255, 255, 255, 0.3);
+            border: 3px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
-            border-top: 4px solid #667eea;
-            width: 40px;
-            height: 40px;
+            border-top: 3px solid #667eea;
+            width: 30px;
+            height: 30px;
             animation: spin 1s linear infinite;
-            margin: 0 auto 15px;
+            margin: 0 auto 10px;
         }
 
         @keyframes spin {
@@ -437,62 +355,65 @@
             flex: 1;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
+            padding-bottom: 10px;
         }
 
         .results {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            margin-bottom: 15px;
+            gap: 10px;
+            margin-bottom: 10px;
         }
 
         .chart-container {
-            padding: 15px;
-            border-radius: 12px;
+            padding: 12px;
+            border-radius: 10px;
         }
 
         .chart-container h3 {
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
 
         .chart-container h3 i {
-            margin-right: 8px;
+            margin-right: 6px;
+            font-size: 14px;
         }
 
         .chart-wrapper {
             display: flex;
             justify-content: center;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         .planet-list {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 8px;
+            gap: 6px;
         }
 
         .planet-item {
             display: flex;
             justify-content: space-between;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 0.9rem;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 0.8rem;
         }
 
         .aspects-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 8px;
-            margin-top: 10px;
+            gap: 6px;
+            margin-top: 8px;
         }
 
         .aspect-item {
-            padding: 10px;
-            border-radius: 8px;
+            padding: 8px;
+            border-radius: 6px;
             text-align: center;
+            font-size: 0.8rem;
         }
 
         .aspect-conjunction { border-left: 3px solid #FFD700; }
@@ -502,84 +423,36 @@
         .aspect-opposition { border-left: 3px solid #8A2BE2; }
 
         .forecast {
-            padding: 15px;
-            border-radius: 12px;
+            padding: 12px;
+            border-radius: 10px;
         }
 
         .forecast h3 {
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
 
         .forecast h3 i {
-            margin-right: 8px;
+            margin-right: 6px;
+            font-size: 14px;
         }
 
         .forecast-text {
-            line-height: 1.5;
-            font-size: 0.95rem;
+            line-height: 1.4;
+            font-size: 0.85rem;
         }
 
         .error-message {
             background: rgba(255, 0, 0, 0.1);
             border: 1px solid rgba(255, 0, 0, 0.3);
             color: #ff6b6b;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 10px;
             display: none;
-        }
-
-        /* Нумерологические элементы для темы Луна */
-        .numerology-elements {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.1;
-        }
-
-        .numerology-circle {
-            position: absolute;
-            border-radius: 50%;
-            border: 1px solid rgba(167, 139, 250, 0.3);
-        }
-
-        .circle-1 {
-            width: 100px;
-            height: 100px;
-            top: 10%;
-            left: 10%;
-        }
-
-        .circle-2 {
-            width: 150px;
-            height: 150px;
-            bottom: 15%;
-            right: 10%;
-        }
-
-        .numerology-line {
-            position: absolute;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(167, 139, 250, 0.3), transparent);
-        }
-
-        .line-1 {
-            width: 80%;
-            top: 30%;
-            left: 10%;
-        }
-
-        .line-2 {
-            width: 60%;
-            bottom: 40%;
-            right: 10%;
+            font-size: 0.8rem;
         }
 
         /* Медиа-запросы для iPad */
@@ -601,23 +474,33 @@
         /* Медиа-запросы для iPhone в альбомной ориентации */
         @media (max-width: 767px) and (orientation: landscape) {
             .container {
-                height: auto;
-                min-height: 100vh;
+                padding: 8px;
             }
             
             .header {
-                margin-bottom: 15px;
+                margin-bottom: 8px;
             }
             
             .input-section {
                 grid-template-columns: 1fr 1fr;
+                gap: 6px;
+                margin-bottom: 8px;
+            }
+            
+            .input-group {
+                padding: 8px;
+            }
+            
+            .calculate-btn {
+                padding: 10px;
+                margin-bottom: 8px;
             }
         }
 
         /* Улучшения для очень маленьких экранов */
         @media (max-width: 320px) {
             .container {
-                padding: 10px;
+                padding: 8px;
             }
             
             .input-section {
@@ -627,17 +510,14 @@
             .planet-list {
                 grid-template-columns: 1fr;
             }
+            
+            .header h1 {
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
 <body class="theme-moon">
-    <div class="numerology-elements">
-        <div class="numerology-circle circle-1"></div>
-        <div class="numerology-circle circle-2"></div>
-        <div class="numerology-line line-1"></div>
-        <div class="numerology-line line-2"></div>
-    </div>
-    
     <div class="container">
         <div class="header">
             <h1><i class="fas fa-star"></i> Астрологический калькулятор</h1>
@@ -672,7 +552,28 @@
             </div>
             <div class="input-group full-width">
                 <label><i class="fas fa-map-marker-alt"></i> Место рождения</label>
-                <input type="text" id="birthPlace" placeholder="Иваново" value="Ивановo">
+                <div class="city-select-wrapper">
+                    <select id="birthPlace">
+                        <option value="Москва" data-lat="55.7558" data-lng="37.6173">Москва</option>
+                        <option value="Санкт-Петербург" data-lat="59.9343" data-lng="30.3351">Санкт-Петербург</option>
+                        <option value="Иваново" data-lat="56.9972" data-lng="40.9714" selected>Иваново</option>
+                        <option value="Липецк" data-lat="52.6088" data-lng="39.5992">Липецк</option>
+                        <option value="Екатеринбург" data-lat="56.8389" data-lng="60.6057">Екатеринбург</option>
+                        <option value="Новосибирск" data-lat="55.0084" data-lng="82.9357">Новосибирск</option>
+                        <option value="Казань" data-lat="55.8304" data-lng="49.0661">Казань</option>
+                        <option value="Нижний Новгород" data-lat="56.2965" data-lng="43.9361">Нижний Новгород</option>
+                        <option value="Челябинск" data-lat="55.1644" data-lng="61.4368">Челябинск</option>
+                        <option value="Самара" data-lat="53.2415" data-lng="50.2212">Самара</option>
+                        <option value="Омск" data-lat="54.9885" data-lng="73.3242">Омск</option>
+                        <option value="Ростов-на-Дону" data-lat="47.2225" data-lng="39.7188">Ростов-на-Дону</option>
+                        <option value="Уфа" data-lat="54.7351" data-lng="55.9587">Уфа</option>
+                        <option value="Красноярск" data-lat="56.0153" data-lng="92.8932">Красноярск</option>
+                        <option value="Воронеж" data-lat="51.6720" data-lng="39.1843">Воронеж</option>
+                        <option value="Пермь" data-lat="58.0105" data-lng="56.2502">Пермь</option>
+                        <option value="Волгоград" data-lat="48.7080" data-lng="44.5133">Волгоград</option>
+                    </select>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
             </div>
             <div class="input-group full-width">
                 <label><i class="fas fa-calendar-day"></i> Текущая дата</label>
@@ -694,7 +595,7 @@
                 <div class="chart-container">
                     <h3><i class="fas fa-chart-pie"></i> Натальная карта</h3>
                     <div class="chart-wrapper">
-                        <canvas id="natalChart" width="300" height="300"></canvas>
+                        <canvas id="natalChart" width="250" height="250"></canvas>
                     </div>
                     <div class="planet-list" id="planetList"></div>
                 </div>
@@ -984,12 +885,12 @@
             if (!canvas) return;
             
             const ctx = canvas.getContext('2d');
-            const centerX = 150;
-            const centerY = 150;
-            const radius = 120;
+            const centerX = 125;
+            const centerY = 125;
+            const radius = 100;
             
             // Очищаем canvas
-            ctx.clearRect(0, 0, 300, 300);
+            ctx.clearRect(0, 0, 250, 250);
             
             // Рисуем зодиакальный круг
             ctx.beginPath();
@@ -999,14 +900,14 @@
             ctx.stroke();
             
             // Рисуем знаки зодиака
-            ctx.font = '16px Arial';
+            ctx.font = '14px Arial';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             
             for (let i = 0; i < 12; i++) {
                 const angle = (i * 30 - 90) * Math.PI / 180;
-                const x = centerX + Math.cos(angle) * (radius + 15);
-                const y = centerY + Math.sin(angle) * (radius + 15);
+                const x = centerX + Math.cos(angle) * (radius + 12);
+                const y = centerY + Math.sin(angle) * (radius + 12);
                 
                 ctx.fillStyle = zodiacSigns[i].color;
                 ctx.fillText(zodiacSigns[i].symbol, x, y);
@@ -1015,13 +916,13 @@
             // Рисуем дома
             ctx.strokeStyle = 'rgba(102, 126, 234, 0.5)';
             ctx.lineWidth = 1;
-            ctx.font = '12px Arial';
+            ctx.font = '10px Arial';
             ctx.fillStyle = '#b8b8b8';
             
             for (let i = 0; i < 12; i++) {
                 const angle = (i * 30 - 90) * Math.PI / 180;
-                const x1 = centerX + Math.cos(angle) * (radius - 30);
-                const y1 = centerY + Math.sin(angle) * (radius - 30);
+                const x1 = centerX + Math.cos(angle) * (radius - 25);
+                const y1 = centerY + Math.sin(angle) * (radius - 25);
                 const x2 = centerX + Math.cos(angle) * radius;
                 const y2 = centerY + Math.sin(angle) * radius;
                 
@@ -1031,8 +932,8 @@
                 ctx.stroke();
                 
                 // Номера домов
-                const houseX = centerX + Math.cos(angle) * (radius - 45);
-                const houseY = centerY + Math.sin(angle) * (radius - 45);
+                const houseX = centerX + Math.cos(angle) * (radius - 35);
+                const houseY = centerY + Math.sin(angle) * (radius - 35);
                 
                 ctx.fillText(i + 1, houseX, houseY);
             }
@@ -1043,13 +944,13 @@
                 if (!pos) return;
                 
                 const angle = (pos.total - 90) * Math.PI / 180;
-                const distance = radius - 40 - index * 5;
+                const distance = radius - 35 - index * 4;
                 const x = centerX + Math.cos(angle) * distance;
                 const y = centerY + Math.sin(angle) * distance;
                 
                 // Рисуем планету
                 ctx.beginPath();
-                ctx.arc(x, y, 6, 0, 2 * Math.PI);
+                ctx.arc(x, y, 5, 0, 2 * Math.PI);
                 ctx.fillStyle = planet.color;
                 ctx.fill();
                 ctx.strokeStyle = '#fff';
@@ -1058,7 +959,7 @@
                 
                 // Подпись планеты
                 ctx.fillStyle = '#fff';
-                ctx.font = 'bold 12px Arial';
+                ctx.font = 'bold 10px Arial';
                 ctx.fillText(planet.symbol, x, y);
             });
             
@@ -1068,13 +969,13 @@
                 if (!pos) return;
                 
                 const angle = (pos.total - 90) * Math.PI / 180;
-                const distance = radius + 20 + index * 5;
+                const distance = radius + 15 + index * 4;
                 const x = centerX + Math.cos(angle) * distance;
                 const y = centerY + Math.sin(angle) * distance;
                 
                 // Рисуем планету (транзитную)
                 ctx.beginPath();
-                ctx.arc(x, y, 5, 0, 2 * Math.PI);
+                ctx.arc(x, y, 4, 0, 2 * Math.PI);
                 ctx.fillStyle = planet.color;
                 ctx.fill();
                 ctx.strokeStyle = '#fff';
@@ -1083,8 +984,8 @@
                 
                 // Обозначаем транзитную планету пунктирным кругом
                 ctx.beginPath();
-                ctx.arc(x, y, 8, 0, 2 * Math.PI);
-                ctx.setLineDash([3, 3]);
+                ctx.arc(x, y, 6, 0, 2 * Math.PI);
+                ctx.setLineDash([2, 2]);
                 ctx.strokeStyle = planet.color;
                 ctx.lineWidth = 1;
                 ctx.stroke();
@@ -1092,12 +993,12 @@
                 
                 // Подпись планеты
                 ctx.fillStyle = '#fff';
-                ctx.font = 'bold 11px Arial';
+                ctx.font = 'bold 9px Arial';
                 ctx.fillText(planet.symbol, x, y);
             });
             
             // Рисуем важные аспекты между натальными и транзитными планетами
-            const importantAspects = aspects.slice(0, 5); // Только 5 самых важных
+            const importantAspects = aspects.slice(0, 4); // Только 4 самых важных
             
             importantAspects.forEach(aspect => {
                 const natalPlanet = natalPositions[aspect.natalPlanet];
@@ -1109,8 +1010,8 @@
                 const transitAngle = (transitPlanet.total - 90) * Math.PI / 180;
                 
                 // Находим позиции для соединения линий
-                const natalDistance = radius - 30;
-                const transitDistance = radius + 25;
+                const natalDistance = radius - 25;
+                const transitDistance = radius + 20;
                 
                 const x1 = centerX + Math.cos(natalAngle) * natalDistance;
                 const y1 = centerY + Math.sin(natalAngle) * natalDistance;
@@ -1122,7 +1023,7 @@
                 ctx.moveTo(x1, y1);
                 ctx.lineTo(x2, y2);
                 ctx.strokeStyle = aspect.color;
-                ctx.lineWidth = 2;
+                ctx.lineWidth = 1.5;
                 ctx.stroke();
             });
         }
@@ -1144,7 +1045,7 @@
             }
             
             if (!birthPlace) {
-                showError('Пожалуйста, введите место рождения');
+                showError('Пожалуйста, выберите место рождения');
                 return false;
             }
             
@@ -1180,14 +1081,25 @@
             document.getElementById('errorMessage').style.display = 'none';
         }
         
+        // Получение координат выбранного города
+        function getSelectedCityCoordinates() {
+            const select = document.getElementById('birthPlace');
+            const selectedOption = select.options[select.selectedIndex];
+            return {
+                name: selectedOption.value,
+                lat: selectedOption.getAttribute('data-lat'),
+                lng: selectedOption.getAttribute('data-lng')
+            };
+        }
+        
         // Основная функция расчета
         function calculateHoroscope() {
             if (!validateInput()) return;
             
             const birthDate = document.getElementById('birthDate').value;
             const birthTime = document.getElementById('birthTime').value;
-            const birthPlace = document.getElementById('birthPlace').value;
             const currentDate = document.getElementById('currentDate').value;
+            const cityData = getSelectedCityCoordinates();
             
             // Показываем индикатор загрузки
             document.getElementById('loading').style.display = 'block';
@@ -1232,7 +1144,7 @@
                     const aspectsGrid = document.getElementById('aspectsGrid');
                     aspectsGrid.innerHTML = '';
                     
-                    calculatedAspects.slice(0, 6).forEach(aspect => {
+                    calculatedAspects.slice(0, 5).forEach(aspect => {
                         const div = document.createElement('div');
                         div.className = `aspect-item aspect-${aspect.aspect.toLowerCase()}`;
                         div.innerHTML = `
@@ -1250,8 +1162,12 @@
                         <p><strong>Солнечный знак:</strong> ${forecast.sunSign.symbol} ${forecast.sunSign.name}</p>
                         <p><strong>Лунный знак:</strong> ${forecast.moonSign.symbol} ${forecast.moonSign.name}</p>
                         <p><strong>Восходящий знак:</strong> ${forecast.ascendant.symbol} ${forecast.ascendant.name}</p>
-                        <p style="margin-top: 10px;">${forecast.main}</p>
+                        <p><strong>Место рождения:</strong> ${cityData.name}</p>
+                        <p style="margin-top: 8px;">${forecast.main}</p>
                     `;
+                    
+                    // Прокручиваем к результатам
+                    document.querySelector('.content-area').scrollTop = 0;
                 } catch (error) {
                     console.error('Ошибка при расчете гороскопа:', error);
                     document.getElementById('loading').style.display = 'none';
@@ -1284,6 +1200,16 @@
                     e.preventDefault();
                 }
             }, { passive: false });
+            
+            // Предотвращаем двойной тап для увеличения
+            let lastTouchEnd = 0;
+            document.addEventListener('touchend', function (event) {
+                const now = (new Date()).getTime();
+                if (now - lastTouchEnd <= 300) {
+                    event.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, false);
         });
     </script>
 </body>
